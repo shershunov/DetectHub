@@ -28,6 +28,9 @@ namespace DetectHub
         public Label fps_counter = new();
         public Label cycle_time = new();
         public Label object_counter = new();
+        public int objects_on_frame;
+        public long[] ms_cycles = new long[10];
+        public int ms_counter = 0;
 
         private void button_start_stop_Click(object sender, EventArgs e)
         {
@@ -329,20 +332,14 @@ namespace DetectHub
             }
             var result = predictor.Detect(data);
 
-            int objects_on_image = 0;
+            objects_on_frame = 0;
             foreach (var box in result.Boxes)
             {
-                objects_on_image++;
-                var boxConfidence = box.Confidence;
-                var className = box.Class.Name;
-                var boxX = box.Bounds.X;
-                var boxY = box.Bounds.Y;
-                var boxWidth = box.Bounds.Width;
-                var boxHeight = box.Bounds.Height;
-                int[] x = { boxX, boxY, boxX + boxWidth, boxY + boxHeight };
-                plot_one_box(x, img, $"{className}: {Math.Round(boxConfidence, 2)}");
+                objects_on_frame++;
+                int[] x = { box.Bounds.X, box.Bounds.Y, box.Bounds.X + box.Bounds.Width, box.Bounds.Y + box.Bounds.Height };
+                plot_one_box(x, img, $"{box.Class.Name}: {Math.Round(box.Confidence, 2)}");
             }
-            object_counter.Text = $"Объектов: {objects_on_image}";
+            object_counter.Text = $"Объектов: {objects_on_frame}";
             return img;
         }
         private void ListWebcams()
@@ -360,8 +357,6 @@ namespace DetectHub
             capture.Release();
             capture = new VideoCapture(webcam_combo.SelectedIndex);
         }
-        public long[] ms_cycles = new long[10];
-        public int ms_counter = 0;
         private void CaptureFrame(object sender, EventArgs e)
         {
             ms_counter++;
@@ -403,7 +398,7 @@ namespace DetectHub
             }
 
             
-        }
+        }   
 
         private void Form1_Load(object sender, EventArgs e)
         {
