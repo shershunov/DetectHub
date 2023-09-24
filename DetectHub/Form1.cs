@@ -1,4 +1,4 @@
-using OpenCvSharp;
+п»їusing OpenCvSharp;
 using OpenCvSharp.Extensions;
 using Compunet.YoloV8;
 using System.Diagnostics;
@@ -25,6 +25,10 @@ namespace DetectHub
         public string[] webcams;
         public ComboBox webcam_combo = new();
         public Label name_model_label = new();
+        public Label fps_counter = new();
+        public Label cycle_time = new();
+        public Label object_counter = new();
+
         private void button_start_stop_Click(object sender, EventArgs e)
         {
             if (model_path != null)
@@ -37,7 +41,7 @@ namespace DetectHub
             }
             else
             {
-                MessageBox.Show("Необходимо указать файл модели .onnx для работы обнаружения.", "Ошибка запуска");
+                MessageBox.Show("РќРµРѕР±С…РѕРґРёРјРѕ Р·Р°РіСЂСѓР·РёС‚СЊ .onnx РјРѕРґРµР»СЊ РґР»СЏ Р·Р°РїСѓСЃРєР°.", "РћС€РёР±РєР° Р·Р°РїСѓСЃРєР°");
             }
             if (button_start_stop_counter % 2 == 1)
             {
@@ -137,7 +141,7 @@ namespace DetectHub
             //capture.FrameHeight = 400;
             //capture.FrameWidth = frame_width;
 
-            this.Text = "DetectHub - Обнаружение объектов";
+            this.Text = "DetectHub - Р Р°СЃРїРѕР·РЅРѕРІР°РЅРёРµ РѕР±СЉРµРєС‚РѕРІ";
             this.Icon = new System.Drawing.Icon("..\\..\\..\\assets\\icon.ico");
             this.Size = new System.Drawing.Size(width_window, height_window);
             this.BackColor = Color.Gray;
@@ -178,7 +182,7 @@ namespace DetectHub
             this.Controls.Add(button_start_stop);
 
             Label open_label = new();
-            open_label.Text = "Загрузить .onnx модель";
+            open_label.Text = "Р—Р°РіСЂСѓР·РёС‚СЊ .onnx РјРѕРґРµР»СЊ";
             open_label.Location = new System.Drawing.Point(20, 150);
             open_label.Font = new Font("Arial", 12);
             open_label.ForeColor = Color.White;
@@ -236,6 +240,30 @@ namespace DetectHub
             taskbar_label.Height = 40;
             this.Controls.Add(taskbar_label);
 
+            fps_counter.Text = "FPS: ";
+            fps_counter.Location = new System.Drawing.Point(20, 440);
+            fps_counter.Font = new Font("Arial", 12);
+            fps_counter.ForeColor = Color.White;
+            fps_counter.Width = 150;
+            fps_counter.Height = 40;
+            this.Controls.Add(fps_counter);
+
+            cycle_time.Text = "Р’СЂРµРјСЏ С†РёРєР»Р°: ";
+            cycle_time.Location = new System.Drawing.Point(20, 480);
+            cycle_time.Font = new Font("Arial", 12);
+            cycle_time.ForeColor = Color.White;
+            cycle_time.Width = 350;
+            cycle_time.Height = 40;
+            this.Controls.Add(cycle_time);
+
+            object_counter.Text = "РћР±СЉРµРєС‚РѕРІ: ?";
+            object_counter.Location = new System.Drawing.Point(20, 520);
+            object_counter.Font = new Font("Arial", 12);
+            object_counter.ForeColor = Color.White;
+            object_counter.Width = 350;
+            object_counter.Height = 40;
+            this.Controls.Add(object_counter);
+
 
             confidence_label.Text = "0.35";
             confidence_label.Location = new System.Drawing.Point(20, 280);
@@ -280,8 +308,8 @@ namespace DetectHub
         {
             int tl = line_thickness == 0 ? (int)(.002 * (img.Height + img.Width) / 2 + 1) : line_thickness;
 
-            OpenCvSharp.Point c1 = new OpenCvSharp.Point(x[0], x[1]);
-            OpenCvSharp.Point c2 = new OpenCvSharp.Point(x[2], x[3]);
+            OpenCvSharp.Point c1 = new(x[0], x[1]);
+            OpenCvSharp.Point c2 = new(x[2], x[3]);
             Cv2.Rectangle(img, c1, c2, Scalar.Orange, tl, LineTypes.AntiAlias);
             if (label != null)
             {
@@ -301,8 +329,10 @@ namespace DetectHub
             }
             var result = predictor.Detect(data);
 
+            int objects_on_image = 0;
             foreach (var box in result.Boxes)
             {
+                objects_on_image++;
                 var boxConfidence = box.Confidence;
                 var className = box.Class.Name;
                 var boxX = box.Bounds.X;
@@ -312,6 +342,7 @@ namespace DetectHub
                 int[] x = { boxX, boxY, boxX + boxWidth, boxY + boxHeight };
                 plot_one_box(x, img, $"{className}: {Math.Round(boxConfidence, 2)}");
             }
+            object_counter.Text = $"РћР±СЉРµРєС‚РѕРІ: {objects_on_image}";
             return img;
         }
         private void ListWebcams()
@@ -329,9 +360,13 @@ namespace DetectHub
             capture.Release();
             capture = new VideoCapture(webcam_combo.SelectedIndex);
         }
-
+        public long[] ms_cycles = new long[10];
+        public int ms_counter = 0;
         private void CaptureFrame(object sender, EventArgs e)
         {
+            ms_counter++;
+            Stopwatch stopwatch = new();
+            stopwatch.Start();
             Mat frame = capture.RetrieveMat();
             if (frame != null)
             {
@@ -352,11 +387,22 @@ namespace DetectHub
                 }
                 else
                 {
+                    object_counter.Text = "РћР±СЉРµРєС‚РѕРІ: ?";
                     outimg_bitmap = BitmapConverter.ToBitmap(frame);
                     image_output.Image = outimg_bitmap;
                 }
                 GC.Collect();
             }
+            stopwatch.Stop();
+            ms_cycles[ms_counter] = stopwatch.ElapsedMilliseconds;
+            if (ms_counter == 9)
+            {
+                fps_counter.Text = $"FPS: {Convert.ToString(1000 / (ms_cycles.Sum() / 10))}";
+                cycle_time.Text = $"Р’СЂРµРјСЏ С†РёРєР»Р°: {ms_cycles.Sum() / 10} ms";
+                ms_counter = 0;
+            }
+
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
