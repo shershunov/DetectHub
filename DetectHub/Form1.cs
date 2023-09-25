@@ -43,7 +43,7 @@ namespace DetectHub
                 button_model_open.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\open1.png");
             }
             else
-            {
+            {   
                 MessageBox.Show("Необходимо загрузить .onnx модель для запуска.", "Ошибка запуска");
             }
             if (button_start_stop_counter % 2 == 1)
@@ -64,9 +64,18 @@ namespace DetectHub
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 model_path = openFileDialog1.FileName;
-                predictor = new YoloV8(model_path);
-                predictor.Parameters.Confidence = (float)confidence;
-                name_model_label.Text = Path.GetFileName(model_path);
+                try
+                {
+                    predictor = new YoloV8(model_path);
+                    predictor.Parameters.Confidence = (float)confidence;
+                    name_model_label.Text = Path.GetFileName(model_path);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Указанна неверная .onnx модель.", "Ошибка загрузки");
+                    model_path = null;
+                    name_model_label.Text = "";
+                }
             }
         }
         private void button_screenshot_Click(object sender, EventArgs e)
@@ -396,9 +405,7 @@ namespace DetectHub
                 cycle_time.Text = $"Время цикла: {ms_cycles.Sum() / 10} ms";
                 ms_counter = 0;
             }
-
-            
-        }   
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
