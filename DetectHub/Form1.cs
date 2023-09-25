@@ -195,6 +195,15 @@ namespace DetectHub
             open_label.BackColor = ColorTranslator.FromHtml("#7c5bc2");
             this.Controls.Add(open_label);
 
+            Label main_label = new();
+            main_label.Text = "DetectHub";
+            main_label.Location = new System.Drawing.Point(40, 40);
+            main_label.Font = new Font("Arial", 20);
+            main_label.ForeColor = Color.White;
+            main_label.Width = 250;
+            main_label.Height = 60;
+            this.Controls.Add(main_label);
+
 
             name_model_label.Location = new System.Drawing.Point(40, 190);
             name_model_label.Text = "Модель не загружена";
