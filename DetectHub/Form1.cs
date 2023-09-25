@@ -40,7 +40,7 @@ namespace DetectHub
                 trackBar1.Enabled = false;
                 webcam_combo.Enabled = false;
                 button_model_open.Enabled = false;
-                button_model_open.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\open1.png");
+                button_model_open.BackgroundImage = Properties.Resources.open1;
             }
             else
             {   
@@ -48,15 +48,15 @@ namespace DetectHub
             }
             if (button_start_stop_counter % 2 == 1)
             {
-                button_start_stop.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\start.png");
+                button_start_stop.BackgroundImage = Properties.Resources.start;
                 trackBar1.Enabled = true;
                 webcam_combo.Enabled = true;
                 button_model_open.Enabled = true;
-                button_model_open.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\open.png");
+                button_model_open.BackgroundImage = Properties.Resources.open;
             }
             else
             {
-                button_start_stop.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\stop.png");
+                button_start_stop.BackgroundImage = Properties.Resources.stop;
             }
         }
         private void button_model_open_Click(object sender, EventArgs e)
@@ -91,33 +91,33 @@ namespace DetectHub
 
         private void button_screenshot_MouseDown(object sender, MouseEventArgs e)
         {
-            button_screenshot.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\screenshot1.png");
+            button_screenshot.BackgroundImage = Properties.Resources.screenshot1;
         }
 
         private void button_screenshot_MouseUp(object sender, MouseEventArgs e)
         {
-            button_screenshot.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\screenshot.png");
+            button_screenshot.BackgroundImage = Properties.Resources.screenshot;
         }
 
         private void button_model_open_MouseDown(object sender, MouseEventArgs e)
         {
-            button_model_open.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\open1.png");
+            button_model_open.BackgroundImage = Properties.Resources.open1;
         }
 
         private void button_model_open_MouseUp(object sender, MouseEventArgs e)
         {
-            button_model_open.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\open.png");
+            button_model_open.BackgroundImage = Properties.Resources.open;
         }
 
         private void button_start_stop_MouseDown(object sender, MouseEventArgs e)
         {
             if (button_start_stop_counter % 2 == 1)
             {
-                button_start_stop.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\start1.png");
+                button_start_stop.BackgroundImage = Properties.Resources.start1;
             }
             else
             {
-                button_start_stop.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\stop1.png");
+                button_start_stop.BackgroundImage = Properties.Resources.stop1;
             }
         }
 
@@ -126,11 +126,11 @@ namespace DetectHub
             if (button_start_stop_counter % 2 == 1)
             {
 
-                button_start_stop.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\start.png");
+                button_start_stop.BackgroundImage = Properties.Resources.start;
             }
             else
             {
-                button_start_stop.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\stop.png");
+                button_start_stop.BackgroundImage = Properties.Resources.stop;
             }
         }
 
@@ -156,11 +156,11 @@ namespace DetectHub
             {
                 MessageBox.Show("Не удается получить доступ к камере", "Ошибка доступа");
             }
-            capture.FrameHeight = 480;
             capture.FrameWidth = 640;
+            capture.FrameHeight = 480;
 
             this.Text = "DetectHub - Распознование объектов";
-            this.Icon = new Icon("..\\..\\..\\assets\\icon.ico");
+            this.Icon = Properties.Resources.mainicon;
             this.Size = new System.Drawing.Size(width_window, height_window);
             this.BackColor = Color.Gray;
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -186,7 +186,7 @@ namespace DetectHub
             button_start_stop.Click += new EventHandler(button_start_stop_Click);
             button_start_stop.MouseDown += button_start_stop_MouseDown;
             button_start_stop.MouseUp += button_start_stop_MouseUp;
-            button_start_stop.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\start.png");
+            button_start_stop.BackgroundImage = Properties.Resources.start;
             button_start_stop.BackgroundImageLayout = ImageLayout.Stretch;
             this.Controls.Add(button_start_stop);
 
@@ -231,7 +231,7 @@ namespace DetectHub
             button_model_open.Click += new EventHandler(button_model_open_Click);
             button_model_open.MouseDown += button_model_open_MouseDown;
             button_model_open.MouseUp += button_model_open_MouseUp;
-            button_model_open.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\open.png");
+            button_model_open.BackgroundImage = Properties.Resources.open;
             button_model_open.BackgroundImageLayout = ImageLayout.Stretch;
             button_model_open.BackColor = ColorTranslator.FromHtml("#7c5bc2");
             this.Controls.Add(button_model_open);
@@ -248,7 +248,7 @@ namespace DetectHub
             button_screenshot.Click += new EventHandler(button_screenshot_Click);
             button_screenshot.MouseDown += button_screenshot_MouseDown;
             button_screenshot.MouseUp += button_screenshot_MouseUp;
-            button_screenshot.BackgroundImage = Image.FromFile("..\\..\\..\\assets\\screenshot.png");
+            button_screenshot.BackgroundImage = Properties.Resources.screenshot;
             button_screenshot.BackgroundImageLayout = ImageLayout.Stretch;
             button_screenshot.BackColor = ColorTranslator.FromHtml("#7c5bc2");
             this.Controls.Add(button_screenshot);
@@ -310,7 +310,7 @@ namespace DetectHub
             trackBar1.Width = 200;
             this.Controls.Add(trackBar1);
             PictureBox first_element = new();
-            first_element.Image = Bitmap.FromFile("..\\..\\..\\assets\\first_element.png");
+            first_element.Image = Properties.Resources.first_element;
             first_element.Left = 14;
             first_element.Top = 110;
             first_element.Width = 450;
