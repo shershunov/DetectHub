@@ -1,9 +1,8 @@
-﻿    using OpenCvSharp;
-    using OpenCvSharp.Extensions;
-    using Compunet.YoloV8;
-    using System.Diagnostics;
-using System.Windows.Forms;
-
+﻿using OpenCvSharp;
+using OpenCvSharp.Extensions;
+using Compunet.YoloV8;
+using System.Diagnostics;
+using Compunet.YoloV8.Data;
 
 namespace DetectHub
 {
@@ -151,7 +150,7 @@ namespace DetectHub
             int height_window = 800;
 
             capture = new VideoCapture(0, VideoCaptureAPIs.IMAGES);
-            //capture.FrameHeight = 400;
+            //capture.FrameHeight = 100;
             //capture.FrameWidth = frame_width;
 
             this.Text = "DetectHub - Распознование объектов";
@@ -328,108 +327,90 @@ namespace DetectHub
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
         }
 
-            private void Button_start_stop_MouseEnter(object? sender, EventArgs e)
-            {
-                throw new NotImplementedException();
-            }
+        private void Button_start_stop_MouseEnter(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
-            void plot_one_box(int[] x, Mat img, string label = null, int line_thickness = 2)
+        void plot_one_box(int[] x, Mat img, string label = null, int line_thickness = 2)
+        {
+            int tl = line_thickness == 0 ? (int)(.002 * (img.Height + img.Width) / 2 + 1) : line_thickness;
+            OpenCvSharp.Point c1 = new(x[0], x[1]);
+            OpenCvSharp.Point c2 = new(x[2], x[3]);
+            Cv2.Rectangle(img, c1, c2, Scalar.Orange, tl, LineTypes.AntiAlias);
+            c2 = new OpenCvSharp.Point(c1.X + label.Length * 10.8, c1.Y - 18);
+            Cv2.Rectangle(img, new OpenCvSharp.Point(c1.X - 1, c1.Y), c2, Scalar.Orange, -1, LineTypes.AntiAlias);
+            Cv2.PutText(img, label, new OpenCvSharp.Point(c1.X + 2, c1.Y - 4), HersheyFonts.HersheyDuplex, .6, new Scalar(225, 255, 255), 1, LineTypes.AntiAlias);
+        }
+        Mat ProcessFrame(Mat img)
+        {
+            Bitmap bitmap = img.ToBitmap();
+            MemoryStream ms = new();
+            bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            data = ms.ToArray();
+            
+            var result = predictor.Detect(data);
+            int box_count;
+            for (box_count = 0; box_count < result.Boxes.Count; box_count++)
             {
-                int tl = line_thickness == 0 ? (int)(.002 * (img.Height + img.Width) / 2 + 1) : line_thickness;
+                Compunet.YoloV8.Data.IBoundingBox? box = result.Boxes[box_count];
+                int[] x = { box.Bounds.X, box.Bounds.Y, box.Bounds.X + box.Bounds.Width, box.Bounds.Y + box.Bounds.Height };
+                plot_one_box(x, img, $"{box.Class.Name}: {Math.Round(box.Confidence, 2)}");
+            }
+            object_counter.Text = $"Объектов: {box_count}";
+            return img;
+        }
+        private void ListWebcams()
+        {
+            DirectShowLib.DsDevice[] devices = DirectShowLib.DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice);
+            foreach (DirectShowLib.DsDevice device in devices)
+            {
+                webcam_combo.Items.Add(device.Name);
+            }
+            webcam_combo.SelectedIndex = 0;
+        }
 
-                OpenCvSharp.Point c1 = new(x[0], x[1]);
-                OpenCvSharp.Point c2 = new(x[2], x[3]);
-                Cv2.Rectangle(img, c1, c2, Scalar.Orange, tl, LineTypes.AntiAlias);
-                if (label != null)
-                {
-                    int tf = Math.Max(tl - 1, 1);
-                    c2 = new OpenCvSharp.Point(c1.X + label.Length * 10.8, c1.Y - 18);
-                    Cv2.Rectangle(img, new OpenCvSharp.Point(c1.X - 1, c1.Y), c2, Scalar.Orange, -1, LineTypes.AntiAlias);
-                    Cv2.PutText(img, label, new OpenCvSharp.Point(c1.X + 2, c1.Y - 4), HersheyFonts.HersheyDuplex, .6, new Scalar(225, 255, 255), tf, LineTypes.AntiAlias);
-                }
-            }
-            Mat ProcessFrame(Mat img)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            capture.Release();
+            capture = new VideoCapture(webcam_combo.SelectedIndex);
+        }
+        private void CaptureFrame(object sender, EventArgs e)
+        {
+            ms_counter++;
+            Stopwatch stopwatch = new();
+            stopwatch.Start();
+            Mat frame = capture.RetrieveMat();
+            if (button_start_stop_counter % 2 == 0)
             {
-                Bitmap bitmap = img.ToBitmap();
-                using (MemoryStream ms = new())
-                {
-                    bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    data = ms.ToArray();
-                }
-                var result = predictor.Detect(data);
-
-                objects_on_frame = 0;
-                foreach (var box in result.Boxes)
-                {
-                    objects_on_frame++;
-                    int[] x = { box.Bounds.X, box.Bounds.Y, box.Bounds.X + box.Bounds.Width, box.Bounds.Y + box.Bounds.Height };
-                    plot_one_box(x, img, $"{box.Class.Name}: {Math.Round(box.Confidence, 2)}");
-                }
-                object_counter.Text = $"Объектов: {objects_on_frame}";
-                return img;
+                outimg_bitmap = BitmapConverter.ToBitmap(ProcessFrame(frame));
+                image_output.Image = outimg_bitmap;
             }
-            private void ListWebcams()
+            else
             {
-                DirectShowLib.DsDevice[] devices = DirectShowLib.DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice);
-                foreach (DirectShowLib.DsDevice device in devices)
+                object_counter.Text = "Объектов: ?";
+                outimg_bitmap = BitmapConverter.ToBitmap(frame);
+                image_output.Image = outimg_bitmap;
+                confidence = (double)trackBar1.Value / trackBar1.Maximum;
+                confidence_label.Text = $"{confidence}";
+                if (predictor != null)
                 {
-                    webcam_combo.Items.Add(device.Name);
-                }
-                webcam_combo.SelectedIndex = 0;
-            }
-
-            private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-            {
-                capture.Release();
-                capture = new VideoCapture(webcam_combo.SelectedIndex);
-            }
-            private void CaptureFrame(object sender, EventArgs e)
-            {
-                ms_counter++;
-                Stopwatch stopwatch = new();
-                stopwatch.Start();
-                Mat frame = capture.RetrieveMat();
-                if (frame != null)
-                {
-                    if (button_start_stop_counter % 2 == 1)
-                    {
-                        confidence = (double)trackBar1.Value / trackBar1.Maximum;
-                        confidence_label.Text = $"{confidence}";
-                        if (predictor != null)
-                        {
-                            predictor.Parameters.Confidence = (float)confidence;
-                        }
-                    }
-                    if (button_start_stop_counter % 2 == 0)
-                    {
-                        Mat plotted_img = ProcessFrame(frame);
-                        outimg_bitmap = BitmapConverter.ToBitmap(plotted_img);
-                        image_output.Image = outimg_bitmap;
-                    }
-                    else
-                    {
-                        object_counter.Text = "Объектов: ?";
-                        outimg_bitmap = BitmapConverter.ToBitmap(frame);
-                        image_output.Image = outimg_bitmap;
-                    }
-                    GC.Collect();
-                }
-                stopwatch.Stop();
-                ms_cycles[ms_counter] = stopwatch.ElapsedMilliseconds;
-                if (ms_counter == 9)
-                {
-                    fps_counter.Text = $"FPS: {Convert.ToString(1000 / (ms_cycles.Sum() / 10))}";
-                    cycle_time.Text = $"Время цикла: {ms_cycles.Sum() / 10} ms";
-                    ms_counter = 0;
+                    predictor.Parameters.Confidence = (float)confidence;
                 }
             }
-
-            private void Form1_Load(object sender, EventArgs e)
+            GC.Collect();
+            
+            stopwatch.Stop();
+            ms_cycles[ms_counter] = stopwatch.ElapsedMilliseconds;
+            if (ms_counter == 9)
             {
-                //AllocConsole();
-            }
-            //[dllimport("kernel32.dll", setlasterror = true)]
-            //[return: marshalas(unmanagedtype.bool)]
-            //static extern bool allocconsole();
+                fps_counter.Text = $"FPS: {Convert.ToString(1000 / (ms_cycles.Sum() / 10))}";
+                cycle_time.Text = $"Время цикла: {ms_cycles.Sum() / 10} ms";
+                ms_counter = 0;
+             }
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
         }
     }
+}
