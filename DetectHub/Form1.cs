@@ -148,10 +148,16 @@ namespace DetectHub
             InitializeComponent();
             int width_window = 1200;
             int height_window = 800;
-
-            capture = new VideoCapture(0, VideoCaptureAPIs.IMAGES);
-            //capture.FrameHeight = 100;
-            //capture.FrameWidth = frame_width;
+            try
+            {
+                capture = new VideoCapture(0, VideoCaptureAPIs.IMAGES);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удается получить доступ к камере", "Ошибка доступа");
+            }
+            capture.FrameHeight = 480;
+            capture.FrameWidth = 640;
 
             this.Text = "DetectHub - Распознование объектов";
             this.Icon = new Icon("..\\..\\..\\assets\\icon.ico");
@@ -372,8 +378,16 @@ namespace DetectHub
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            capture.Release();
-            capture = new VideoCapture(webcam_combo.SelectedIndex);
+            try
+            {
+                capture.Release();
+                capture = new VideoCapture(webcam_combo.SelectedIndex);
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Не удается получить доступ к камере", "Ошибка доступа");
+            }
         }
         private void CaptureFrame(object sender, EventArgs e)
         {
