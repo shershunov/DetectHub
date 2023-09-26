@@ -412,6 +412,7 @@ namespace DetectHub
                     predictor.Parameters.Confidence = (float)confidence;
                 }
             }
+
             stopwatch.Stop();
             ms_cycles[ms_counter] = stopwatch.ElapsedMilliseconds;
             if (ms_counter == 9)
