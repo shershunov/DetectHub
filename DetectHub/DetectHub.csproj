@@ -5,7 +5,10 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
+	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+
     <ImplicitUsings>enable</ImplicitUsings>
+
   </PropertyGroup>
 
   <ItemGroup>

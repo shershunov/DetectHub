@@ -19,7 +19,7 @@ namespace DetectHub
         public Button button_screenshot = new();
         public OpenFileDialog openFileDialog1 = new();
         public string model_path;
-        public TrackBar trackBar1 = new();
+        public TrackBar confidense_trackbar = new();
         public double confidence = .35;
         public Label confidence_label = new();
         public string[] webcams;
@@ -37,7 +37,7 @@ namespace DetectHub
             if (model_path != null)
             {
                 button_start_stop_counter++;
-                trackBar1.Enabled = false;
+                confidense_trackbar.Enabled = false;
                 webcam_combo.Enabled = false;
                 button_model_open.Enabled = false;
                 button_model_open.BackgroundImage = Properties.Resources.open1;
@@ -49,7 +49,7 @@ namespace DetectHub
             if (button_start_stop_counter % 2 == 1)
             {
                 button_start_stop.BackgroundImage = Properties.Resources.start;
-                trackBar1.Enabled = true;
+                confidense_trackbar.Enabled = true;
                 webcam_combo.Enabled = true;
                 button_model_open.Enabled = true;
                 button_model_open.BackgroundImage = Properties.Resources.open;
@@ -299,16 +299,16 @@ namespace DetectHub
             this.Controls.Add(confidence_label);
 
 
-            trackBar1.Minimum = 5;
-            trackBar1.Maximum = 100;
-            trackBar1.TickFrequency = 5;
-            trackBar1.LargeChange = 10;
-            trackBar1.SmallChange = 1;
-            trackBar1.Value = 35;
-            trackBar1.Location = new System.Drawing.Point(220, 240);
-            trackBar1.BackColor = ColorTranslator.FromHtml("#7c5bc2"); trackBar1.ForeColor = Color.White;
-            trackBar1.Width = 200;
-            this.Controls.Add(trackBar1);
+            confidense_trackbar.Minimum = 5;
+            confidense_trackbar.Maximum = 100;
+            confidense_trackbar.TickFrequency = 5;
+            confidense_trackbar.LargeChange = 10;
+            confidense_trackbar.SmallChange = 1;
+            confidense_trackbar.Value = 35;
+            confidense_trackbar.Location = new System.Drawing.Point(220, 240);
+            confidense_trackbar.BackColor = ColorTranslator.FromHtml("#7c5bc2"); confidense_trackbar.ForeColor = Color.White;
+            confidense_trackbar.Width = 200;
+            this.Controls.Add(confidense_trackbar);
             PictureBox first_element = new();
             first_element.Image = Properties.Resources.first_element;
             first_element.Left = 14;
@@ -323,7 +323,7 @@ namespace DetectHub
             webcam_combo.DropDownStyle = ComboBoxStyle.DropDownList;
             webcam_combo.Location = new System.Drawing.Point(650, 50);
             webcam_combo.Width = 300;
-            webcam_combo.SelectedIndexChanged += new EventHandler(comboBox1_SelectedIndexChanged);
+            webcam_combo.SelectedIndexChanged += new EventHandler(webcam_combo_SelectedIndexChanged);
             this.Controls.Add(webcam_combo);
 
             ListWebcams();
@@ -338,7 +338,7 @@ namespace DetectHub
             throw new NotImplementedException();
         }
 
-        void plot_one_box(int[] x, Mat img, string label = null, int line_thickness = 2)
+        void plot_one_box(int[] x, Mat img, string label, int line_thickness = 2)
         {
             int tl = line_thickness == 0 ? (int)(.002 * (img.Height + img.Width) / 2 + 1) : line_thickness;
             OpenCvSharp.Point c1 = new(x[0], x[1]);
@@ -359,7 +359,7 @@ namespace DetectHub
             int box_count;
             for (box_count = 0; box_count < result.Boxes.Count; box_count++)
             {
-                Compunet.YoloV8.Data.IBoundingBox? box = result.Boxes[box_count];
+                IBoundingBox? box = result.Boxes[box_count];
                 int[] x = { box.Bounds.X, box.Bounds.Y, box.Bounds.X + box.Bounds.Width, box.Bounds.Y + box.Bounds.Height };
                 plot_one_box(x, img, $"{box.Class.Name}: {Math.Round(box.Confidence, 2)}");
             }
@@ -376,7 +376,7 @@ namespace DetectHub
             webcam_combo.SelectedIndex = 0;
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void webcam_combo_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
@@ -384,7 +384,7 @@ namespace DetectHub
                 capture = new VideoCapture(webcam_combo.SelectedIndex);
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Не удается получить доступ к камере", "Ошибка доступа");
             }
@@ -405,15 +405,13 @@ namespace DetectHub
                 object_counter.Text = "Объектов: ?";
                 outimg_bitmap = BitmapConverter.ToBitmap(frame);
                 image_output.Image = outimg_bitmap;
-                confidence = (double)trackBar1.Value / trackBar1.Maximum;
+                confidence = (double)confidense_trackbar.Value / confidense_trackbar.Maximum;
                 confidence_label.Text = $"{confidence}";
                 if (predictor != null)
                 {
                     predictor.Parameters.Confidence = (float)confidence;
                 }
             }
-            GC.Collect();
-            
             stopwatch.Stop();
             ms_cycles[ms_counter] = stopwatch.ElapsedMilliseconds;
             if (ms_counter == 9)
@@ -422,6 +420,8 @@ namespace DetectHub
                 cycle_time.Text = $"Время цикла: {ms_cycles.Sum() / 10} ms";
                 ms_counter = 0;
              }
+
+            GC.Collect();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
