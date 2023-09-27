@@ -7,9 +7,9 @@
   DetectHub - Программа для обнаружения объектов в реальном времени на основе моделей <a href='https://github.com/ultralytics/ultralytics'>YoloV8</a> и <a href='https://github.com/ultralytics/yolov5'>YoloV5</a> в формате .onnx
   <br>
   <br>
-  # Export from PyTorch
 </p>
 
+# Export from PyTorch
 Код для конвертации своей модели Yolo из .pt в .onnx
 
 ```python
