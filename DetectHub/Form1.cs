@@ -197,7 +197,7 @@ namespace DetectHub
             open_label.ForeColor = Color.White;
             open_label.Width = 280;
             open_label.Height = 40;
-            open_label.BackColor = ColorTranslator.FromHtml("#7c5bc2");
+            open_label.BackColor = ColorTranslator.FromHtml("#636363");
             this.Controls.Add(open_label);
 
             Label main_label = new();
@@ -216,7 +216,7 @@ namespace DetectHub
             name_model_label.ForeColor = Color.White;
             name_model_label.Width = 280;
             name_model_label.Height = 40;
-            name_model_label.BackColor = ColorTranslator.FromHtml("#7c5bc2");
+            name_model_label.BackColor = ColorTranslator.FromHtml("#636363");
             this.Controls.Add(name_model_label);
 
             button_model_open.Location = new System.Drawing.Point(320, 150);
@@ -233,7 +233,7 @@ namespace DetectHub
             button_model_open.MouseUp += button_model_open_MouseUp;
             button_model_open.BackgroundImage = Properties.Resources.open;
             button_model_open.BackgroundImageLayout = ImageLayout.Stretch;
-            button_model_open.BackColor = ColorTranslator.FromHtml("#7c5bc2");
+            button_model_open.BackColor = ColorTranslator.FromHtml("#636363");
             this.Controls.Add(button_model_open);
 
             button_screenshot.Location = new System.Drawing.Point(40, 340);
@@ -250,7 +250,7 @@ namespace DetectHub
             button_screenshot.MouseUp += button_screenshot_MouseUp;
             button_screenshot.BackgroundImage = Properties.Resources.screenshot;
             button_screenshot.BackgroundImageLayout = ImageLayout.Stretch;
-            button_screenshot.BackColor = ColorTranslator.FromHtml("#7c5bc2");
+            button_screenshot.BackColor = ColorTranslator.FromHtml("#636363");
             this.Controls.Add(button_screenshot);
 
 
@@ -261,7 +261,7 @@ namespace DetectHub
             taskbar_label.ForeColor = Color.White;
             taskbar_label.Width = 150;
             taskbar_label.Height = 40;
-            taskbar_label.BackColor = ColorTranslator.FromHtml("#7c5bc2");
+            taskbar_label.BackColor = ColorTranslator.FromHtml("#636363");
             this.Controls.Add(taskbar_label);
 
             fps_counter.Text = "FPS: ";
@@ -295,7 +295,7 @@ namespace DetectHub
             confidence_label.ForeColor = Color.White;
             confidence_label.Width = 60;
             confidence_label.Height = 40;
-            confidence_label.BackColor = ColorTranslator.FromHtml("#7c5bc2");
+            confidence_label.BackColor = ColorTranslator.FromHtml("#636363");
             this.Controls.Add(confidence_label);
 
 
@@ -306,7 +306,7 @@ namespace DetectHub
             confidense_trackbar.SmallChange = 1;
             confidense_trackbar.Value = 35;
             confidense_trackbar.Location = new System.Drawing.Point(220, 240);
-            confidense_trackbar.BackColor = ColorTranslator.FromHtml("#7c5bc2"); confidense_trackbar.ForeColor = Color.White;
+            confidense_trackbar.BackColor = ColorTranslator.FromHtml("#636363"); confidense_trackbar.ForeColor = Color.White;
             confidense_trackbar.Width = 200;
             this.Controls.Add(confidense_trackbar);
             PictureBox first_element = new();
