@@ -8,7 +8,10 @@
   <br>
   <br>
 </p>
-##Код для конвертации своей модели Yolo из .pt в .onnx
+## Export from PyTorch
+
+Код для конвертации своей модели Yolo из .pt в .onnx
+
 ```python
 from ultralytics import YOLO
 
