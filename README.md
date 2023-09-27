@@ -8,7 +8,13 @@
   <br>
   <br>
 </p>
-  #Код для конвертации своей модели Yolo из .pt в .onnx
+##Код для конвертации своей модели Yolo из .pt в .onnx
 ```python
-your_code = do_some_stuff
+from ultralytics import YOLO
+
+# Load a model
+model = YOLO('path/to/model')
+
+# export the model to ONNX format
+model.export(format='onnx', opset=15)
 ```
