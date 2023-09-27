@@ -9,8 +9,6 @@
   <br>
   Код для конвертации своей модели Yolo из .pt в .onnx
 </p>
-«`{python} {from ultralytics import YOLO
-
-model = YOLO('path/to/model')
-
-model.export(format='onnx', opset=15)}«`
+```python
+your_code = do_some_stuff
+```
