@@ -9,15 +9,15 @@
   <br>
 </p>
 
-# Export from PyTorch
+# Экспорт через PyTorch
 Код для конвертации своей модели Yolo из .pt в .onnx
 
 ```python
 from ultralytics import YOLO
 
-# Load a model
+# Загрузка модели
 model = YOLO('path/to/model')
 
-# export the model to ONNX format
+# Экспорт в .onnx формат
 model.export(format='onnx', opset=15)
 ```
