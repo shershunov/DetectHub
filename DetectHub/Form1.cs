@@ -136,7 +136,7 @@ namespace DetectHub
 
         private void start_cursor_enter(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.Default;
+            this.Cursor = Cursors.Hand;
             if (button_start_stop_counter % 2 == 1)
             {
                 button_start_stop.BackgroundImage = Properties.Resources.start_hover;
