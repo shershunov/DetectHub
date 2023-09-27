@@ -9,7 +9,7 @@
   <br>
   Код для конвертации своей модели Yolo из .pt в .onn
 </p>
-```python
+<pre class="language-python">
 from ultralytics import YOLO
 
 # Load a model
@@ -17,4 +17,4 @@ model = YOLO('path/to/model')
 
 # export the model to ONNX format
 model.export(format='onnx', opset=15)
-```
+</pre>
