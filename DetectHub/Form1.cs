@@ -40,7 +40,7 @@ namespace DetectHub
                 confidense_trackbar.Enabled = false;
                 webcam_combo.Enabled = false;
                 button_model_open.Enabled = false;
-                button_model_open.BackgroundImage = Properties.Resources.open1;
+                button_model_open.BackgroundImage = Properties.Resources.open_hover;
             }
             else
             {   
@@ -91,7 +91,7 @@ namespace DetectHub
 
         private void button_screenshot_MouseDown(object sender, MouseEventArgs e)
         {
-            button_screenshot.BackgroundImage = Properties.Resources.screenshot1;
+            button_screenshot.BackgroundImage = Properties.Resources.screenshot_click;
         }
 
         private void button_screenshot_MouseUp(object sender, MouseEventArgs e)
@@ -101,7 +101,7 @@ namespace DetectHub
 
         private void button_model_open_MouseDown(object sender, MouseEventArgs e)
         {
-            button_model_open.BackgroundImage = Properties.Resources.open1;
+            button_model_open.BackgroundImage = Properties.Resources.open_click;
         }
 
         private void button_model_open_MouseUp(object sender, MouseEventArgs e)
@@ -113,11 +113,11 @@ namespace DetectHub
         {
             if (button_start_stop_counter % 2 == 1)
             {
-                button_start_stop.BackgroundImage = Properties.Resources.start1;
+                button_start_stop.BackgroundImage = Properties.Resources.start_click;
             }
             else
             {
-                button_start_stop.BackgroundImage = Properties.Resources.stop1;
+                button_start_stop.BackgroundImage = Properties.Resources.stop_click;
             }
         }
 
@@ -134,14 +134,54 @@ namespace DetectHub
             }
         }
 
-        private void cursor_enter(object sender, EventArgs e)
-        {
-            this.Cursor = Cursors.Hand;
-        }
-
-        private void cursor_leave(object sender, EventArgs e)
+        private void start_cursor_enter(object sender, EventArgs e)
         {
             this.Cursor = Cursors.Default;
+            if (button_start_stop_counter % 2 == 1)
+            {
+                button_start_stop.BackgroundImage = Properties.Resources.start_hover;
+            }
+            else
+            {
+                button_start_stop.BackgroundImage = Properties.Resources.stop_hover;
+            }
+        }
+
+        private void start_cursor_leave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+            if (button_start_stop_counter % 2 == 1)
+            {
+                button_start_stop.BackgroundImage = Properties.Resources.start;
+            }
+            else
+            {
+                button_start_stop.BackgroundImage = Properties.Resources.stop;
+            }
+        }        
+
+        private void open_cursor_enter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+            button_model_open.BackgroundImage = Properties.Resources.open_hover;
+        }
+
+        private void open_cursor_leave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+            button_model_open.BackgroundImage = Properties.Resources.open;
+        }        
+
+        private void screenshot_cursor_enter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+            button_screenshot.BackgroundImage = Properties.Resources.screenshot_hover;
+        }
+
+        private void screenshot_cursor_leave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+            button_screenshot.BackgroundImage = Properties.Resources.screenshot;
         }
         public MainHub()
         {
@@ -181,8 +221,8 @@ namespace DetectHub
             button_start_stop.FlatAppearance.MouseDownBackColor = Color.Transparent;
             button_start_stop.Width = 126;
             button_start_stop.Height = 50;
-            button_start_stop.MouseEnter += cursor_enter;
-            button_start_stop.MouseLeave += cursor_leave;
+            button_start_stop.MouseEnter += start_cursor_enter;
+            button_start_stop.MouseLeave += start_cursor_leave;
             button_start_stop.Click += new EventHandler(button_start_stop_Click);
             button_start_stop.MouseDown += button_start_stop_MouseDown;
             button_start_stop.MouseUp += button_start_stop_MouseUp;
@@ -226,8 +266,8 @@ namespace DetectHub
             button_model_open.FlatAppearance.MouseDownBackColor = Color.Transparent;
             button_model_open.Width = 80;
             button_model_open.Height = 30;
-            button_model_open.MouseEnter += cursor_enter;
-            button_model_open.MouseLeave += cursor_leave;
+            button_model_open.MouseEnter += open_cursor_enter;
+            button_model_open.MouseLeave += open_cursor_leave;
             button_model_open.Click += new EventHandler(button_model_open_Click);
             button_model_open.MouseDown += button_model_open_MouseDown;
             button_model_open.MouseUp += button_model_open_MouseUp;
@@ -243,8 +283,8 @@ namespace DetectHub
             button_screenshot.FlatAppearance.MouseDownBackColor = Color.Transparent;
             button_screenshot.Width = 220;
             button_screenshot.Height = 40;
-            button_screenshot.MouseEnter += cursor_enter;
-            button_screenshot.MouseLeave += cursor_leave;
+            button_screenshot.MouseEnter += screenshot_cursor_enter;
+            button_screenshot.MouseLeave += screenshot_cursor_leave;
             button_screenshot.Click += new EventHandler(button_screenshot_Click);
             button_screenshot.MouseDown += button_screenshot_MouseDown;
             button_screenshot.MouseUp += button_screenshot_MouseUp;

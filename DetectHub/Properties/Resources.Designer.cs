@@ -93,9 +93,19 @@ namespace DetectHub.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap open1 {
+        internal static System.Drawing.Bitmap open_click {
             get {
-                object obj = ResourceManager.GetObject("open1", resourceCulture);
+                object obj = ResourceManager.GetObject("open_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap open_hover {
+            get {
+                object obj = ResourceManager.GetObject("open_hover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +123,19 @@ namespace DetectHub.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap screenshot1 {
+        internal static System.Drawing.Bitmap screenshot_click {
             get {
-                object obj = ResourceManager.GetObject("screenshot1", resourceCulture);
+                object obj = ResourceManager.GetObject("screenshot_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap screenshot_hover {
+            get {
+                object obj = ResourceManager.GetObject("screenshot_hover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +153,19 @@ namespace DetectHub.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap start1 {
+        internal static System.Drawing.Bitmap start_click {
             get {
-                object obj = ResourceManager.GetObject("start1", resourceCulture);
+                object obj = ResourceManager.GetObject("start_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap start_hover {
+            get {
+                object obj = ResourceManager.GetObject("start_hover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +183,19 @@ namespace DetectHub.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap stop1 {
+        internal static System.Drawing.Bitmap stop_click {
             get {
-                object obj = ResourceManager.GetObject("stop1", resourceCulture);
+                object obj = ResourceManager.GetObject("stop_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stop_hover {
+            get {
+                object obj = ResourceManager.GetObject("stop_hover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
