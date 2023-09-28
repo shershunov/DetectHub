@@ -70,7 +70,7 @@ namespace DetectHub
                     predictor.Parameters.Confidence = (float)confidence;
                     name_model_label.Text = Path.GetFileName(model_path);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     MessageBox.Show("Указанна неверная .onnx модель.", "Ошибка загрузки");
                     model_path = null;
