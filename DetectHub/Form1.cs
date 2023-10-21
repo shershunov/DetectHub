@@ -199,7 +199,7 @@ namespace DetectHub
             capture.FrameWidth = 640;
             capture.FrameHeight = 480;
 
-            this.Text = "DetectHub - Распознование объектов";
+            this.Text = "DetectHub - Распознавание объектов";
             this.Icon = Properties.Resources.icon;
             this.Size = new System.Drawing.Size(width_window, height_window);
             this.BackColor = Color.Gray;
