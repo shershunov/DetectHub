@@ -21,3 +21,8 @@ model = YOLO('path/to/model')
 # Экспорт в .onnx формат
 model.export(format='onnx', opset=15)
 ```
+
+# Превью
+<p align="center">
+  <img src="https://i.imgur.com/KuvgBD6.png" alt="Preview"/>
+</p>
