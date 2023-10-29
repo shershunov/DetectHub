@@ -24,5 +24,5 @@ model.export(format='onnx', opset=15)
 
 # Превью
 <p align="center">
-  <img src="https://i.imgur.com/KuvgBD6.png" alt="Preview"/>
+  <img src="https://i.imgur.com/KuvgBD6.png" alt="Preview" width="60%"/>
 </p>
