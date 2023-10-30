@@ -23,6 +23,6 @@ model.export(format='onnx', opset=15)
 ```
 
 # Превью
-<p align="center">
-  <img src="https://i.imgur.com/L0poGqP.png" alt="Preview" width="85%"/>
+<p align="center"><a href='https://github.com/EkelviNistars/DetectHub/releases'>
+  <img src="https://i.imgur.com/L0poGqP.png" alt="Preview" width="85%"/></a>
 </p>
