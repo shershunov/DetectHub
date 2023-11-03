@@ -31,6 +31,9 @@ namespace DetectHub
         public int objects_on_frame;
         public long[] ms_cycles = new long[10];
         public int ms_counter = 0;
+        public MemoryStream ms = new();
+        public int box_count;
+        public int[] x;
 
         private void button_start_stop_Click(object sender, EventArgs e)
         {
@@ -391,12 +394,10 @@ namespace DetectHub
         Mat ProcessFrame(Mat img)
         {
             Bitmap bitmap = img.ToBitmap();
-            MemoryStream ms = new();
             bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
             data = ms.ToArray();
             
             var result = predictor.Detect(data);
-            int box_count;
             for (box_count = 0; box_count < result.Boxes.Count; box_count++)
             {
                 IBoundingBox? box = result.Boxes[box_count];
