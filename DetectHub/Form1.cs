@@ -29,11 +29,9 @@ namespace DetectHub
         public Label cycle_time = new();
         public Label object_counter = new();
         public int objects_on_frame;
-        public long[] ms_cycles = new long[10];
         public int ms_counter = 0;
         public MemoryStream ms = new();
         public int box_count;
-        public int[] x;
         public Stopwatch stopwatch = new();
 
         private void button_start_stop_Click(object sender, EventArgs e)
@@ -434,7 +432,6 @@ namespace DetectHub
         private void CaptureFrame(object sender, EventArgs e)
         {
             ms_counter++;
-            stopwatch.Reset();
             stopwatch.Start();
             Mat frame = capture.RetrieveMat();
             if (button_start_stop_counter % 2 == 0)
@@ -456,13 +453,14 @@ namespace DetectHub
             }
 
             stopwatch.Stop();
-            ms_cycles[ms_counter] = stopwatch.ElapsedMilliseconds;
             if (ms_counter == 9)
             {
-                fps_counter.Text = $"FPS: {Convert.ToString(1000 / (ms_cycles.Sum() / 10))}";
-                cycle_time.Text = $"Время цикла: {ms_cycles.Sum() / 10} ms";
+                long cycleTime = stopwatch.ElapsedMilliseconds;
+                fps_counter.Text = $"FPS: {Convert.ToString(1000 / (cycleTime / 10))}";
+                cycle_time.Text = $"Время цикла: {cycleTime / 10} ms";
+                stopwatch.Reset();
                 ms_counter = 0;
-             }
+            }
 
             GC.Collect();
         }
