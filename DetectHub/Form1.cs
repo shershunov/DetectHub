@@ -34,6 +34,7 @@ namespace DetectHub
         public MemoryStream ms = new();
         public int box_count;
         public int[] x;
+        public Stopwatch stopwatch = new();
 
         private void button_start_stop_Click(object sender, EventArgs e)
         {
@@ -433,7 +434,7 @@ namespace DetectHub
         private void CaptureFrame(object sender, EventArgs e)
         {
             ms_counter++;
-            Stopwatch stopwatch = new();
+            stopwatch.Reset();
             stopwatch.Start();
             Mat frame = capture.RetrieveMat();
             if (button_start_stop_counter % 2 == 0)
