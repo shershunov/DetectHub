@@ -22,5 +22,5 @@ model.export(format='onnx', opset=15)
 
 # Preview
 <p align="center"><a href='https://github.com/EkelviNistars/DetectHub/releases'>
-  <img src="https://i.imgur.com/8lIN5YY.png" alt="Preview" width="85%"/></a>
+  <img src="https://i.imgur.com/8lIN5YY.png" alt="Preview" width="95%"/></a>
 </p>
