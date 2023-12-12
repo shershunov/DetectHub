@@ -90,6 +90,7 @@ namespace DetectHub
                 }
             }
         }
+
         private void ScreenshotButton_Click(object sender, EventArgs e)
         {
             string outimg_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
