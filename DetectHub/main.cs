@@ -4,7 +4,6 @@ using Compunet.YoloV8;
 using System.Diagnostics;
 using Compunet.YoloV8.Data;
 using System.Runtime.InteropServices;
-using System.Drawing.Drawing2D;
 
 namespace DetectHub
 {
@@ -160,7 +159,7 @@ namespace DetectHub
             Cv2.Rectangle(img, c1, c2, Scalar.Orange, tl, LineTypes.AntiAlias);
             c2 = new OpenCvSharp.Point(c1.X + label.Length * 10.8, c1.Y - 18);
             Cv2.Rectangle(img, new OpenCvSharp.Point(c1.X - 1, c1.Y), c2, Scalar.Orange, -1, LineTypes.AntiAlias);
-            Cv2.PutText(img, label, new OpenCvSharp.Point(c1.X + 2, c1.Y - 4), HersheyFonts.HersheyDuplex, .6, new Scalar(225, 255, 255), 1, LineTypes.AntiAlias);
+            Cv2.PutText(img, label, new OpenCvSharp.Point(c1.X + 2, c1.Y - 4), HersheyFonts.HersheySimplex, .6, new Scalar(225, 255, 255), 1, LineTypes.AntiAlias);
         }
 
         Mat ProcessFrame(Mat img)
