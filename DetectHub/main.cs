@@ -85,7 +85,7 @@ namespace DetectHub
                 catch (Exception)
                 {
                     MessageBox.Show("The .onnx model is incorrect.", "Loading error");
-                    modelPath = null;
+                    modelPath = null; 
                     modelNameLabel.Text = "Model not loaded";
                 }
             }
