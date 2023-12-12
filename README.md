@@ -4,25 +4,23 @@
   </a>
   <br>
   <br>
-  DetectHub - Программа для обнаружения объектов в реальном времени на основе моделей <a href='https://github.com/ultralytics/ultralytics'>YoloV8</a> и <a href='https://github.com/ultralytics/yolov5'>YoloV5</a> в формате .onnx
+  DetectHub - Real-time object detection program based on YoloV8 and YoloV5 models in .onnx format.
 <br>
 <br>
 </p>
 
-# Экспорт через PyTorch
-Код для конвертации своей модели Yolo из .pt в .onnx
+# Export via PyTorch
+Code to convert your Yolo model from .pt to .onnx
 
 ```python
 from ultralytics import YOLO
 
-# Загрузка модели
 model = YOLO('path/to/model')
 
-# Экспорт в .onnx формат
 model.export(format='onnx', opset=15)
 ```
 
-# Превью
+# Preview
 <p align="center"><a href='https://github.com/EkelviNistars/DetectHub/releases'>
   <img src="https://i.imgur.com/L0poGqP.png" alt="Preview" width="85%"/></a>
 </p>
