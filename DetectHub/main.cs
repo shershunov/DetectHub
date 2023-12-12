@@ -94,7 +94,7 @@ namespace DetectHub
         private void ScreenshotButton_Click(object sender, EventArgs e)
         {
             string outimg_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            string screenshot_fileName = "screenshot_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".png";
+            string screenshot_fileName = "screenshot_" + DateTime.Now.ToString("dd-MM-yy_HH-mm-ss") + ".png";
             if (!Directory.Exists($"{outimg_path}\\DetectHub"))
             {
                 Directory.CreateDirectory($"{outimg_path}\\DetectHub");
