@@ -1,6 +1,6 @@
 <p align="center">
   <a href='https://github.com/EkelviNistars/DetectHub/releases'>
-  <img src="https://i.imgur.com/8DvMAK4.png" alt="DetectHub"/>
+  <img src="https://i.imgur.com/8DvMAK4.png" alt="DetectHub" width="85%"/>
   </a>
   <br>
   <br>
